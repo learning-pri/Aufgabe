@@ -1,5 +1,7 @@
 package com.eko.task.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eko.task.dao.NeftTransaction;
-import com.eko.task.repository.AufgabeRepository;
+import com.eko.task.service.IAufgabeService;
 
 @RestController
 @RequestMapping("/")
 public class AufgabeController {
 
 	@Autowired
-//	IAufgabeRepository repository;
-	AufgabeRepository repository;
+//	AufgabeRepository repository;
+	IAufgabeService service;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String welcome() {
@@ -28,20 +30,20 @@ public class AufgabeController {
 	@GetMapping("/transaction/{transactionId}")
 	public ResponseEntity<NeftTransaction> getTransactionDetails(
 			@PathVariable(value = "transactionId") int transactionId) {
-		NeftTransaction nTransactionObj = repository.getTransactionId(transactionId);
+		NeftTransaction nTransactionObj = service.getTransactionId(transactionId);
 		System.out.println(nTransactionObj);
 		if (nTransactionObj == null)
 			return ResponseEntity.notFound().build();
 		return ResponseEntity.ok().body(nTransactionObj);
 	}
 
-//	@GetMapping("/transaction/{ifsccode}")
-//	public ResponseEntity<List<NeftTransaction>> getTransactionsByIfsccode(
-//			@PathVariable(value = "ifsccode") String ifsccode) {
-//		List<NeftTransaction> transactionList = repository.findByIfsccode(ifsccode);
-//		System.out.println(transactionList);
-//		if (transactionList == null)
-//			return ResponseEntity.notFound().build();
-//		return ResponseEntity.ok().body(transactionList);
-//	}
+	@GetMapping("/ifsccode/{ifsccode}")
+	public ResponseEntity<List<NeftTransaction>> getTransactionsByIfsccode(
+			@PathVariable(value = "ifsccode") String ifsccode) {
+		List<NeftTransaction> transactionList = service.findByIfsccode(ifsccode);
+		System.out.println(transactionList);
+		if (transactionList == null)
+			return ResponseEntity.notFound().build();
+		return ResponseEntity.ok().body(transactionList);
+	}
 }
