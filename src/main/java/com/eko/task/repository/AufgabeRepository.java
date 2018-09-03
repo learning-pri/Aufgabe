@@ -9,7 +9,7 @@ import com.eko.task.dao.NeftTransaction;
 
 public interface AufgabeRepository extends JpaRepository<NeftTransaction,Long>{
 
-	@Query("select nt.ekotrxnid from NeftTransaction nt where nt.ifscCode=':ifsccode'")
+	@Query("select nt from NeftTransaction nt where nt.ifscCode=?1")
     List<NeftTransaction> findByIfsccode(String ifsccode);
 
 }

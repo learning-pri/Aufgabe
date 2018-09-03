@@ -37,13 +37,14 @@ public class AufgabeController {
 		return ResponseEntity.ok().body(nTransactionObj);
 	}
 
-	@GetMapping("/ifsccode/{ifsccode}")
-	public ResponseEntity<List<NeftTransaction>> getTransactionsByIfsccode(
+	@GetMapping("/ifscccode/{ifsccode}")
+	public List<NeftTransaction> getTransactionsByIfsccode(
 			@PathVariable(value = "ifsccode") String ifsccode) {
+		System.out.println("IFSC CODE :: "+ifsccode);
 		List<NeftTransaction> transactionList = service.findByIfsccode(ifsccode);
-		System.out.println(transactionList);
+		System.out.println("List Values :: "+transactionList);
 		if (transactionList == null)
-			return ResponseEntity.notFound().build();
-		return ResponseEntity.ok().body(transactionList);
+			return null;
+		return transactionList;
 	}
 }

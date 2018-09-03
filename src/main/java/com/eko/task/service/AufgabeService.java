@@ -18,7 +18,7 @@ import com.eko.task.repository.AufgabeRepository;
 public class AufgabeService implements IAufgabeService {
 
 	@Autowired
-	private AufgabeRepository aufgabeService;
+	private AufgabeRepository aufgabeRepository;
 
 	@PersistenceContext
 	protected EntityManager em;
@@ -42,8 +42,8 @@ public class AufgabeService implements IAufgabeService {
 	}
 
 	public List<NeftTransaction> findByIfsccode(String ifsccode) {
-		System.out.println("ISCCODE  ::  "+ifsccode);
-		List<NeftTransaction> list = (List<NeftTransaction>) aufgabeService.findByIfsccode(ifsccode);
+		System.out.println("------------ISCCODE  ::  "+ifsccode);
+		List<NeftTransaction> list = (List<NeftTransaction>) aufgabeRepository.findByIfsccode(ifsccode);
 		return list;
 		// String queryStr = "select nt.ekotrxnid from NeftTransaction nt where
 		// nt.ifscCode='?'";
